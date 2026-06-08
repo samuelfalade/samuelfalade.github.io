@@ -58,13 +58,13 @@
   }
 
   /* in-page embed overlay (keeps visitors on-site) */
-  var triggers = Array.prototype.slice.call(document.querySelectorAll("[data-embed]"));
+  var triggers = Array.prototype.slice.call(document.querySelectorAll("[data-embed],[data-video]"));
   if (triggers.length) {
     var modal = document.createElement("div");
     modal.className = "modal";
     modal.innerHTML =
       '<div class="modal-backdrop" data-close></div>' +
-      '<div class="modal-panel" role="dialog" aria-modal="true" aria-label="Interactive prototype">' +
+      '<div class="modal-panel" role="dialog" aria-modal="true" aria-label="Media viewer">' +
         '<div class="modal-head"><span class="mt"></span><div class="actions">' +
           '<a class="newtab" target="_blank" rel="noopener">Open in new tab ↗</a>' +
           '<button class="modal-close" type="button" aria-label="Close" data-close>×</button>' +
@@ -77,16 +77,28 @@
     var mNewtab = modal.querySelector(".newtab");
     var lastFocus = null;
 
-    function openModal(src, title, link) {
+    function openModal(t) {
       lastFocus = document.activeElement;
-      mTitle.textContent = title || "";
-      mNewtab.href = link || src;
-      var f = document.createElement("iframe");
-      f.setAttribute("allow", "autoplay; fullscreen; clipboard-write; encrypted-media; picture-in-picture");
-      f.setAttribute("allowfullscreen", "");
-      f.setAttribute("loading", "lazy");
-      f.src = src;
-      mBody.appendChild(f);
+      var videoSrc = t.getAttribute("data-video");
+      var embedSrc = t.getAttribute("data-embed");
+      var link = t.getAttribute("data-link");
+      mTitle.textContent = t.getAttribute("data-title") || "";
+      mBody.innerHTML = "";
+      modal.classList.toggle("video", !!videoSrc);
+      if (videoSrc) {
+        var v = document.createElement("video");
+        v.src = videoSrc;
+        v.controls = true; v.autoplay = true; v.setAttribute("playsinline", "");
+        mBody.appendChild(v);
+      } else {
+        var f = document.createElement("iframe");
+        f.setAttribute("allow", "autoplay; fullscreen; clipboard-write; encrypted-media; picture-in-picture");
+        f.setAttribute("allowfullscreen", "");
+        f.src = embedSrc;
+        mBody.appendChild(f);
+      }
+      if (link) { mNewtab.href = link; mNewtab.style.display = ""; }
+      else { mNewtab.style.display = "none"; }
       modal.classList.add("open");
       document.body.style.overflow = "hidden";
       modal.querySelector(".modal-close").focus();
@@ -100,7 +112,7 @@
     triggers.forEach(function (t) {
       t.addEventListener("click", function (e) {
         e.preventDefault();
-        openModal(t.getAttribute("data-embed"), t.getAttribute("data-title"), t.getAttribute("data-link"));
+        openModal(t);
       });
     });
     modal.addEventListener("click", function (e) {
