@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Resume — Samuel Falade</title>
+<meta name="description" content="Interactive resume of Samuel Falade — Learning Experience Designer and instructional design professional." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,400;9..144,0,500;9..144,0,600;9..144,1,400;9..144,1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+<style>
+  .resume-head{padding:64px 0 30px;border-bottom:1px solid var(--line);}
+  .resume-head h1{font-size:clamp(2.2rem,5vw,3.4rem);}
+  .resume-head .title{font-size:1.18rem;color:var(--accent-deep);font-weight:500;margin-top:8px;font-family:"Fraunces",serif;font-style:italic;}
+  .contactline{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:18px;font-size:.92rem;color:var(--soft);}
+  .contactline a{color:var(--soft);border-bottom:1px solid var(--line);padding-bottom:1px;}
+  .contactline a:hover{color:var(--ink);border-color:var(--accent);}
+  .toolbar{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px;}
+  .toolbar a,.toolbar button{font-family:inherit;cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:10px 18px;border-radius:999px;font-size:.9rem;font-weight:500;transition:all .15s;}
+  .toolbar a.solid{background:var(--ink);color:#fff;border-color:var(--ink);}
+  .toolbar a:hover,.toolbar button:hover{transform:translateY(-2px);box-shadow:var(--shadow);}
+
+  /* in-page section nav */
+  .subnav{position:sticky;top:66px;z-index:30;background:rgba(251,250,247,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
+  .subnav .wrap{display:flex;gap:6px;overflow-x:auto;padding-top:10px;padding-bottom:10px;}
+  .subnav a{white-space:nowrap;font-size:.86rem;color:var(--soft);padding:6px 14px;border-radius:999px;transition:all .15s;}
+  .subnav a:hover{background:var(--panel);color:var(--ink);}
+  .subnav a.active{background:var(--ink);color:#fff;}
+
+  .rsec{padding:46px 0;border-bottom:1px solid var(--line);}
+  .rsec h2{font-size:1.5rem;margin-bottom:6px;}
+  .rsec .sec-label{margin-bottom:4px;}
+  .summary{font-size:1.12rem;color:var(--ink);max-width:70ch;}
+
+  /* skills filter */
+  .filterbar{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 22px;}
+  .fbtn{cursor:pointer;font-family:inherit;border:1px solid var(--line);background:var(--card);color:var(--soft);padding:7px 15px;border-radius:999px;font-size:.84rem;font-weight:500;transition:all .15s;}
+  .fbtn.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+  .skillgroup{margin-bottom:18px;transition:opacity .2s;}
+  .skillgroup h4{font-size:.82rem;letter-spacing:.04em;text-transform:uppercase;color:var(--accent-deep);font-weight:600;margin-bottom:9px;}
+  .skillgroup .taglist{display:flex;flex-wrap:wrap;gap:8px;}
+  .skillgroup.dim{opacity:.18;}
+
+  /* experience timeline */
+  .xp{position:relative;padding-left:30px;}
+  .xp::before{content:"";position:absolute;left:7px;top:6px;bottom:6px;width:2px;background:var(--line);}
+  .job{position:relative;padding:0 0 26px;}
+  .job::before{content:"";position:absolute;left:-30px;top:7px;width:14px;height:14px;border-radius:50%;background:var(--paper);border:3px solid var(--accent);}
+  .job .jhead{cursor:pointer;display:flex;justify-content:space-between;gap:16px;align-items:baseline;}
+  .job h3{font-size:1.18rem;}
+  .job .org{font-size:.98rem;color:var(--soft);font-weight:500;}
+  .job .when{font-size:.85rem;color:var(--faint);white-space:nowrap;}
+  .job .role{font-size:.92rem;color:var(--accent-deep);font-weight:500;margin-top:2px;}
+  .job ul{margin:12px 0 0 0;padding-left:18px;max-height:1000px;overflow:hidden;transition:max-height .3s ease,opacity .25s,margin .25s;}
+  .job ul li{font-size:.96rem;color:var(--soft);margin-bottom:7px;}
+  .job.collapsed ul{max-height:0;opacity:0;margin:0;}
+  .job .toggle{font-size:.78rem;color:var(--faint);margin-top:4px;user-select:none;}
+
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:26px;}
+  @media(max-width:680px){.twocol{grid-template-columns:1fr;}}
+  .proj-item{border:1px solid var(--line);border-radius:12px;padding:18px;background:var(--card);}
+  .proj-item h3{font-size:1.08rem;margin-bottom:4px;}
+  .proj-item .stk{font-size:.78rem;color:var(--accent-deep);font-weight:500;margin-bottom:8px;}
+  .proj-item p{font-size:.92rem;color:var(--soft);}
+  .proj-item a{color:var(--accent-deep);font-weight:500;}
+
+  .edu-item,.simple-item{padding:13px 0;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+  .edu-item:last-child,.simple-item:last-child{border-bottom:none;}
+  .edu-item b{font-weight:600;}
+  .edu-item .sub{color:var(--soft);font-size:.94rem;}
+  .edu-item .when{color:var(--faint);font-size:.86rem;white-space:nowrap;}
+
+  @media print{
+    @page{margin:0.5in 0.55in;}
+    nav.site,.subnav,.toolbar,footer.site,.menu-toggle,.toggle,.filterbar,.hint-print{display:none!important;}
+    .resume-head{padding:0 0 10px;}
+    .resume-head h1{font-size:22pt;}
+    .resume-head .title{font-size:12pt;margin-top:2px;}
+    .contactline{margin-top:8px;font-size:8.5pt;gap:4px 12px;}
+    .wrap{padding:0;max-width:100%;}
+    .job ul,.job.collapsed ul{max-height:none!important;opacity:1!important;margin-top:6px!important;}
+    .skillgroup.dim{opacity:1!important;}
+    .skillgroup{margin-bottom:8px;}
+    .rsec{padding:9px 0;border-bottom:1px solid #e2e2e2;page-break-inside:auto;}
+    .rsec h2{font-size:12.5pt;margin-bottom:2px;}
+    .sec-label{font-size:7.5pt;margin-bottom:2px;}
+    .summary{font-size:9.5pt;line-height:1.4;}
+    .filterbar{margin:0;}
+    #skills p{display:none;}
+    .xp{padding-left:22px;margin-top:10px!important;}
+    .xp::before{left:5px;}
+    .job{padding-bottom:11px;page-break-inside:avoid;}
+    .job::before{left:-22px;width:10px;height:10px;border-width:2px;}
+    .job h3{font-size:11pt;}
+    .job .org{font-size:8.5pt;}
+    .job .role{font-size:8.5pt;}
+    .job .when{font-size:8pt;}
+    .job ul li{font-size:8.7pt;margin-bottom:3px;line-height:1.35;}
+    .chip{font-size:7.6pt;padding:2px 8px;}
+    .proj-item{padding:11px;page-break-inside:avoid;}
+    .proj-item h3{font-size:9.5pt;}
+    .proj-item p{font-size:8.4pt;}
+    .twocol{gap:14px;}
+    .edu-item,.simple-item{padding:6px 0;}
+    .edu-item b,.simple-item b{font-size:9.5pt;}
+    .edu-item .when{font-size:8pt;}
+    body{background:#fff;}
+    h2 span{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="site">
+  <div class="wrap">
+    <a class="brand" href="index.html">Samuel<span>.</span>Falade</a>
+    <button class="menu-toggle" aria-label="Menu" onclick="document.getElementById('nav').classList.toggle('open')">&#9776;</button>
+    <div class="navlinks" id="nav">
+      <a href="index.html">Home</a>
+      <a href="work.html">Work</a>
+      <a href="creative.html">Creative</a>
+      <a href="resume.html" class="active">Resume</a>
+      <a href="about.html">About</a>
+      <a class="btn" href="mailto:samuelfalade@gmail.com">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="resume-head">
+  <div class="wrap">
+    <div class="eyebrow">Resume</div>
+    <h1>Samuel Opeyemi Falade</h1>
+    <div class="title">Learning Experience &amp; Instructional Design</div>
+    <div class="contactline">
+      <a href="mailto:samuelfalade@gmail.com">samuelfalade@gmail.com</a>
+      <a href="mailto:samuelfalade@tamu.edu">samuelfalade@tamu.edu</a>
+      <a href="index.html">Portfolio</a>
+      <a href="https://www.linkedin.com/in/samuelfalade/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/samuelfalade" target="_blank" rel="noopener">GitHub</a>
+    </div>
+    <div class="toolbar">
+      <a class="solid" href="Samuel_Falade_Resume.pdf" download>&#8595; Download PDF</a>
+      <button onclick="window.print()">&#9113; Print</button>
+      <a href="mailto:samuelfalade@gmail.com">Email me</a>
+    </div>
+  </div>
+</header>
+
+<div class="subnav">
+  <div class="wrap" id="subnav">
+    <a href="#summary" class="active">Summary</a>
+    <a href="#skills">Skills</a>
+    <a href="#experience">Experience</a>
+    <a href="#projects">Projects</a>
+    <a href="#education">Education</a>
+    <a href="#more">Certifications</a>
+  </div>
+</div>
+
+<section class="rsec" id="summary">
+  <div class="wrap">
+    <div class="sec-label">Professional summary</div>
+    <p class="summary">
+      Learning experience designer and UX-informed instructional design professional with experience
+      creating digital learning content, editing educational video, building Canvas LMS courses, and
+      designing interactive learning tools. Background spans multimedia production, learner-centered
+      design, educational technology, and research on adaptive feedback in educational games.
+      Experienced with Adobe Premiere Pro, Photoshop, Figma, Canvas LMS, and video-based learning
+      workflows, with working familiarity in Camtasia and Adobe Captivate. Passionate about translating
+      complex concepts into clear, engaging, and effective learning experiences.
+    </p>
+  </div>
+</section>
+
+<section class="rsec" id="skills">
+  <div class="wrap">
+    <div class="sec-label">Tools &amp; skills</div>
+    <h2>What I work with</h2>
+    <p style="color:var(--soft);margin:6px 0 4px;">Filter by area:</p>
+    <div class="filterbar" id="filterbar">
+      <button class="fbtn active" data-f="all">All</button>
+      <button class="fbtn" data-f="learning">Learning &amp; UX</button>
+      <button class="fbtn" data-f="multimedia">Multimedia &amp; eLearning</button>
+      <button class="fbtn" data-f="dev">Design &amp; Dev</button>
+      <button class="fbtn" data-f="research">Research</button>
+      <button class="fbtn" data-f="ai">AI &amp; Productivity</button>
+    </div>
+
+    <div class="skillgroup" data-g="learning">
+      <h4>Learning Design &amp; UX</h4>
+      <div class="taglist">
+        <span class="chip">Instructional design</span><span class="chip">Learner-centered design</span>
+        <span class="chip">User experience design</span><span class="chip">Accessible course design</span>
+        <span class="chip">Storyboarding</span><span class="chip">Educational technology</span>
+        <span class="chip">Interactive learning design</span>
+      </div>
+    </div>
+    <div class="skillgroup" data-g="multimedia">
+      <h4>Multimedia &amp; eLearning Tools</h4>
+      <div class="taglist">
+        <span class="chip">Adobe Premiere Pro</span><span class="chip">Adobe Photoshop</span>
+        <span class="chip">Camtasia</span><span class="chip">Adobe Captivate</span>
+        <span class="chip">Mediasite</span><span class="chip">Canvas LMS</span>
+        <span class="chip">Figma</span><span class="chip">Adobe Lightroom</span>
+      </div>
+    </div>
+    <div class="skillgroup" data-g="dev">
+      <h4>Design &amp; Development</h4>
+      <div class="taglist">
+        <span class="chip">Unreal Engine</span><span class="chip">HTML</span><span class="chip">JavaScript</span>
+        <span class="chip">CSS</span><span class="chip">Python</span><span class="chip">C#</span><span class="chip">MATLAB</span>
+      </div>
+    </div>
+    <div class="skillgroup" data-g="research">
+      <h4>Research &amp; Collaboration</h4>
+      <div class="taglist">
+        <span class="chip">Usability thinking</span><span class="chip">Prototyping</span>
+        <span class="chip">Academic research</span><span class="chip">Qualitative observation</span>
+        <span class="chip">Cross-functional collaboration</span>
+      </div>
+    </div>
+    <div class="skillgroup" data-g="ai">
+      <h4>AI &amp; Productivity</h4>
+      <div class="taglist">
+        <span class="chip">AI-assisted ideation</span><span class="chip">Scripting</span>
+        <span class="chip">Content refinement</span><span class="chip">Claude</span>
+        <span class="chip">ChatGPT</span><span class="chip">Gemini</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="rsec" id="experience">
+  <div class="wrap">
+    <div class="sec-label">Selected work experience</div>
+    <h2>Experience <span style="font-size:.8rem;font-family:Inter,sans-serif;color:var(--faint);font-weight:400;">(click any role to expand)</span></h2>
+    <div class="xp" id="xp" style="margin-top:22px;">
+
+      <div class="job">
+        <div class="jhead">
+          <div>
+            <h3>Graduate Teaching Assistant</h3>
+            <div class="org">Craig &amp; Galen Brown Engineering Honors Program &middot; College Station, TX</div>
+            <div class="role">Learner-focused instruction &amp; academic support</div>
+          </div>
+          <div class="when">Aug 2021 – Dec 2025</div>
+        </div>
+        <ul>
+          <li>Facilitated ~30 seminars per semester for 400+ first-year engineering students, delivering learner-focused instruction and academic support.</li>
+          <li>Designed an accessible Canvas course page to improve navigation, communication, and learner experience.</li>
+          <li>Guided students in professional development, research discovery, and academic engagement through structured instructional support.</li>
+          <li>Provided feedback on student work and supported course delivery across a high-enrollment learning environment.</li>
+          <li>Helped create a positive, organized learning experience for a large and diverse student population.</li>
+        </ul>
+        <div class="toggle">show details</div>
+      </div>
+
+      <div class="job collapsed">
+        <div class="jhead">
+          <div>
+            <h3>Graduate Researcher</h3>
+            <div class="org">Department of Construction Science &middot; College Station, TX</div>
+            <div class="role">Virtual reality user studies</div>
+          </div>
+          <div class="when">Jun 2021 – Aug 2021</div>
+        </div>
+        <ul>
+          <li>Conducted 60+ virtual reality studies on 50+ participants.</li>
+          <li>Managed 4 undergraduate student workers in the lab.</li>
+          <li>Scheduled study sessions and managed participant correspondence.</li>
+          <li>Administered participant compensation for qualified study participants.</li>
+        </ul>
+        <div class="toggle">show details</div>
+      </div>
+
+      <div class="job collapsed">
+        <div class="jhead">
+          <div>
+            <h3>Design &amp; Production Assistant</h3>
+            <div class="org">Engineering Studio for Advanced Instruction &amp; Learning &middot; College Station, TX</div>
+            <div class="role">eLearning production &amp; accessibility</div>
+          </div>
+          <div class="when">Jun 2020 – Aug 2020</div>
+        </div>
+        <ul>
+          <li>Designed and built 10+ course experiences in Canvas LMS for clear, accessible, learner-centered digital instruction.</li>
+          <li>Produced ADA-compliant transcripts for 20+ lecture recordings to improve accessibility and usability.</li>
+          <li>Edited educational video in Adobe Premiere Pro and prepared media for delivery via Mediasite and Canvas LMS.</li>
+          <li>Organized, published, and embedded multimedia content across online course environments.</li>
+          <li>Helped translate instructional materials into polished digital learning experiences.</li>
+        </ul>
+        <div class="toggle">show details</div>
+      </div>
+
+      <div class="job collapsed">
+        <div class="jhead">
+          <div>
+            <h3>Graduate Teaching Assistant</h3>
+            <div class="org">Department of Chemistry &middot; College Station, TX</div>
+            <div class="role">Course support &amp; communications</div>
+          </div>
+          <div class="when">Sep 2020 – May 2021</div>
+        </div>
+        <ul>
+          <li>Documented laboratory activities in photographs for the department&rsquo;s online publication.</li>
+          <li>Proctored examinations and supported course administration.</li>
+          <li>Managed the Slack workspace for TAMU Chemistry graduate recruitment virtual open days.</li>
+        </ul>
+        <div class="toggle">show details</div>
+      </div>
+
+      <div class="job collapsed">
+        <div class="jhead">
+          <div>
+            <h3>Graduate Teaching Assistant</h3>
+            <div class="org">Department of Visualization &middot; College Station, TX</div>
+            <div class="role">Photography instruction</div>
+          </div>
+          <div class="when">Jan 2020 – May 2020</div>
+        </div>
+        <ul>
+          <li>Evaluated student photography projects and provided constructive feedback.</li>
+          <li>Guided students on assignments and supported skill development in visual communication.</li>
+        </ul>
+        <div class="toggle">show details</div>
+      </div>
+
+      <div class="job collapsed">
+        <div class="jhead">
+          <div>
+            <h3>Graduate Intern — Downstream Gas, Gas Asset Management</h3>
+            <div class="org">Chevron Nigeria Limited &middot; Lagos, Nigeria</div>
+            <div class="role">Engineering &amp; analysis</div>
+          </div>
+          <div class="when">Jun 2016 – Apr 2017</div>
+        </div>
+        <ul>
+          <li>Designed the internal webpage for the Downstream Gas Department.</li>
+          <li>Built a gas pricing model for non-associated gas assets in Microsoft Excel.</li>
+          <li>Prepared daily production reports for three oil fields and documentation for Quarterly Reconciliation Meetings.</li>
+          <li>Managed shipping documentation and correspondence with regulatory and industry stakeholders.</li>
+        </ul>
+        <div class="toggle">show details</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="rsec" id="projects">
+  <div class="wrap">
+    <div class="sec-label">Selected projects</div>
+    <h2>Things I&rsquo;ve designed &amp; built</h2>
+    <div class="twocol" style="margin-top:22px;">
+      <div class="proj-item">
+        <h3>Adaptive Feedback Educational Game Research</h3>
+        <div class="stk">Xcode &middot; ChatGPT &middot; Claude</div>
+        <p>Designed educational game experiences to study how adaptive feedback influences learner interaction and problem-solving, focused on engaging, effective learning environments.</p>
+      </div>
+      <div class="proj-item">
+        <h3>Teacher Support App Prototype</h3>
+        <div class="stk">Figma &middot; Spring 2025</div>
+        <p>A mobile prototype for teachers to support in-class learner interactions, follow-up tracking, collaborative activity management, and access to learner progress via a connected web portal.</p>
+      </div>
+      <div class="proj-item">
+        <h3>International Student Onboarding App</h3>
+        <div class="stk">Adobe Captivate &middot; Fall 2023</div>
+        <p>An interactive onboarding app for prospective international students from Nigeria — a one-stop hub for pre-arrival information and resources, built to reduce information overload at Texas A&amp;M.</p>
+      </div>
+      <div class="proj-item">
+        <h3>Digital Twin — Offshore Wind Maintenance</h3>
+        <div class="stk">Unreal Engine &middot; Spring 2023</div>
+        <p>Designed and programmed the visual component of an Unreal Engine simulation supporting understanding of maintenance workflows and reducing offshore wind system costs.</p>
+      </div>
+      <div class="proj-item">
+        <h3>VR Forest Fire Visualization</h3>
+        <div class="stk">Houdini &middot; Unreal Engine &middot; Summer 2023</div>
+        <p>Explored Houdini and Unreal Engine pipelines to visualize fire-simulation data for wildland firefighter training.</p>
+      </div>
+      <div class="proj-item">
+        <h3>Cognitive Effects of Video Games</h3>
+        <div class="stk">Unreal Engine &middot; Spring 2022</div>
+        <p>Developed four Unreal Engine games modeled on the Freedom Bridge game to investigate how graphics variations affected participant performance.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="rsec" id="education">
+  <div class="wrap">
+    <div class="sec-label">Education</div>
+    <h2>Education</h2>
+    <div style="margin-top:14px;">
+      <div class="edu-item">
+        <div><b>Ph.D. Interdisciplinary Engineering</b> <span class="sub">(Engineering Education)</span><br><span class="sub">Texas A&amp;M University</span></div>
+        <div class="when">Expected Dec 2026</div>
+      </div>
+      <div class="edu-item">
+        <div><b>M.S. Visualization</b><br><span class="sub">Texas A&amp;M University</span></div>
+        <div class="when">Dec 2023</div>
+      </div>
+      <div class="edu-item">
+        <div><b>M.S. Exploration Geophysics</b><br><span class="sub">University of Lagos, Nigeria</span></div>
+        <div class="when">Feb 2016</div>
+      </div>
+      <div class="edu-item">
+        <div><b>B.S. Petroleum Engineering</b><br><span class="sub">University of Ibadan, Nigeria</span></div>
+        <div class="when">Nov 2009</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="rsec" id="more">
+  <div class="wrap">
+    <div class="twocol">
+      <div>
+        <div class="sec-label">Professional development</div>
+        <h2 style="font-size:1.3rem;margin-bottom:12px;">Certifications</h2>
+        <div class="simple-item"><div><b>Foundations of UX Design</b><br><span class="sub" style="color:var(--soft);font-size:.9rem;">Coursera — Google Certificate</span></div><div class="when">Dec 2022</div></div>
+        <div class="simple-item"><div><b>Start the UX Design Process: Empathize, Define, Ideate</b><br><span class="sub" style="color:var(--soft);font-size:.9rem;">Coursera — Google Certificate</span></div><div class="when">Dec 2022</div></div>
+        <div class="simple-item"><div><b>Web Management</b><br><span class="sub" style="color:var(--soft);font-size:.9rem;">Chevron Nigeria Limited</span></div><div class="when">Feb 2016</div></div>
+        <div class="simple-item"><div><b>Lean Sigma Overview</b><br><span class="sub" style="color:var(--soft);font-size:.9rem;">Chevron Nigeria Limited</span></div><div class="when">Jun 2016</div></div>
+      </div>
+      <div>
+        <div class="sec-label">Volunteer</div>
+        <h2 style="font-size:1.3rem;margin-bottom:12px;">Giving back</h2>
+        <div class="simple-item"><div><b>The Battalion</b><br><span class="sub" style="color:var(--soft);font-size:.9rem;">Photographed 50+ events for the university news outlet.</span></div></div>
+        <div class="simple-item"><div><b>Grace Bible Church</b><br><span class="sub" style="color:var(--soft);font-size:.9rem;">Photographed 30+ services and special events.</span></div></div>
+        <div class="simple-item"><div><b>International Student Services</b><br><span class="sub" style="color:var(--soft);font-size:.9rem;">Photographed 1,000+ international students across 10+ events.</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="fl">
+      <a href="index.html">Home</a><a href="work.html">Work</a><a href="creative.html">Creative</a><a href="about.html">About</a>
+      <a href="https://www.linkedin.com/in/samuelfalade/" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+    &copy; 2026 Samuel Falade &middot; Updated March 2026
+  </div>
+</footer>
+
+<script>
+  // expand/collapse experience
+  document.querySelectorAll('.job').forEach(function(job){
+    var head=job.querySelector('.jhead'), tog=job.querySelector('.toggle');
+    function sync(){tog.textContent=job.classList.contains('collapsed')?'show details':'hide details';}
+    function toggle(){job.classList.toggle('collapsed');sync();}
+    head.addEventListener('click',toggle); tog.addEventListener('click',toggle); sync();
+  });
+
+  // skills filter
+  var groups=document.querySelectorAll('.skillgroup');
+  document.querySelectorAll('#filterbar .fbtn').forEach(function(b){
+    b.addEventListener('click',function(){
+      document.querySelectorAll('#filterbar .fbtn').forEach(function(x){x.classList.remove('active');});
+      b.classList.add('active');
+      var f=b.dataset.f;
+      groups.forEach(function(g){g.classList.toggle('dim', f!=='all' && g.dataset.g!==f);});
+    });
+  });
+
+  // subnav active-on-scroll
+  var links=document.querySelectorAll('#subnav a');
+  var secs=Array.from(links).map(function(a){return document.querySelector(a.getAttribute('href'));});
+  function onScroll(){
+    var y=window.scrollY+140, idx=0;
+    secs.forEach(function(s,i){ if(s && s.offsetTop<=y) idx=i; });
+    links.forEach(function(a,i){a.classList.toggle('active',i===idx);});
+  }
+  window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
+</script>
+
+</body>
+</html>
