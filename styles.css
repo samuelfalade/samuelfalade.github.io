@@ -1,0 +1,141 @@
+/* ===== Samuel Falade — portfolio site ===== */
+:root{
+  --ink:#1a1a1e;
+  --soft:#54545e;
+  --faint:#8a8a93;
+  --line:#e4e1d8;
+  --paper:#fbfaf7;
+  --panel:#f3f1ea;
+  --card:#ffffff;
+  --accent:#ff694a;
+  --accent-deep:#cf4b30;
+  --indigo:#262a52;
+  --green:#1f7a5a;
+  --radius:14px;
+  --maxw:1120px;
+  --shadow:0 10px 30px rgba(26,26,30,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color:var(--ink);background:var(--paper);line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:"Fraunces",Georgia,serif;font-weight:500;line-height:1.1;letter-spacing:-0.01em;}
+img{max-width:100%;display:block;}
+a{color:inherit;text-decoration:none;}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+
+/* ---- nav ---- */
+nav.site{position:sticky;top:0;z-index:50;background:rgba(251,250,247,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);}
+nav.site .wrap{display:flex;align-items:center;justify-content:space-between;height:66px;}
+.brand{font-family:"Fraunces",serif;font-size:1.18rem;font-weight:600;letter-spacing:-.02em;}
+.brand span{color:var(--accent);}
+.navlinks{display:flex;gap:28px;align-items:center;font-size:.93rem;}
+.navlinks a{color:var(--soft);transition:color .15s;position:relative;}
+.navlinks a:hover,.navlinks a.active{color:var(--ink);}
+.navlinks a.active::after{content:"";position:absolute;left:0;right:0;bottom:-22px;height:2px;background:var(--accent);}
+.navlinks a.btn{color:#fff;background:var(--ink);padding:9px 18px;border-radius:999px;}
+.navlinks a.btn:hover{background:var(--accent-deep);}
+.menu-toggle{display:none;background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--ink);}
+@media(max-width:760px){
+  .navlinks{display:none;position:absolute;top:66px;left:0;right:0;flex-direction:column;background:var(--paper);border-bottom:1px solid var(--line);padding:18px 28px;gap:18px;}
+  .navlinks.open{display:flex;}
+  .navlinks a.active::after{display:none;}
+  .menu-toggle{display:block;}
+}
+
+/* ---- hero ---- */
+.hero{padding:96px 0 72px;border-bottom:1px solid var(--line);}
+.eyebrow{font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-deep);font-weight:600;margin-bottom:22px;}
+.hero h1{font-size:clamp(2.6rem,6.2vw,4.6rem);max-width:16ch;}
+.hero h1 em{font-style:italic;color:var(--accent);}
+.hero .lede{font-size:1.24rem;color:var(--soft);max-width:60ch;margin-top:28px;}
+.cta-row{display:flex;gap:14px;flex-wrap:wrap;margin-top:36px;}
+.btn-lg{display:inline-block;padding:14px 26px;border-radius:999px;font-size:.97rem;font-weight:500;transition:transform .12s,box-shadow .2s,border-color .2s;}
+.btn-lg.primary{background:var(--ink);color:var(--paper);}
+.btn-lg.primary:hover{transform:translateY(-2px);box-shadow:var(--shadow);}
+.btn-lg.ghost{border:1px solid var(--line);color:var(--ink);}
+.btn-lg.ghost:hover{border-color:var(--ink);}
+
+/* ---- sections ---- */
+section{padding:78px 0;border-bottom:1px solid var(--line);}
+.sec-label{font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);font-weight:600;margin-bottom:14px;}
+section h2{font-size:clamp(1.9rem,3.8vw,2.7rem);max-width:20ch;}
+.sec-intro{font-size:1.13rem;color:var(--soft);max-width:64ch;margin-top:18px;}
+
+/* ---- pillars ---- */
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:46px;}
+@media(max-width:760px){.pillars{grid-template-columns:1fr;}}
+.pillar{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:28px;}
+.pillar .n{font-family:"Fraunces",serif;font-size:1.7rem;color:var(--accent);}
+.pillar h3{font-size:1.2rem;margin:12px 0 8px;}
+.pillar p{font-size:.98rem;color:var(--soft);}
+
+/* ---- work grid ---- */
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:26px;margin-top:46px;}
+@media(max-width:760px){.grid{grid-template-columns:1fr;}}
+.proj-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;transition:transform .15s,box-shadow .2s;display:flex;flex-direction:column;}
+.proj-card:hover{transform:translateY(-4px);box-shadow:var(--shadow);}
+.proj-card .ph{aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;color:#fff;font-family:"Fraunces",serif;font-size:1.5rem;text-align:center;padding:18px;position:relative;}
+.proj-card .ph small{position:absolute;bottom:10px;left:0;right:0;font-family:"Inter",sans-serif;font-size:.68rem;letter-spacing:.05em;opacity:.7;text-transform:uppercase;font-weight:500;}
+.proj-card .body{padding:24px;display:flex;flex-direction:column;flex:1;}
+.proj-card .kicker{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-deep);font-weight:600;margin-bottom:7px;}
+.proj-card h3{font-size:1.32rem;margin-bottom:9px;}
+.proj-card p{font-size:.97rem;color:var(--soft);margin-bottom:14px;flex:1;}
+.chips{display:flex;flex-wrap:wrap;gap:7px;}
+.chip{font-size:.76rem;padding:4px 11px;border-radius:999px;background:var(--panel);border:1px solid var(--line);color:var(--soft);}
+
+/* gradient placeholders */
+.g-coral{background:linear-gradient(135deg,#ff694a,#cf4b30);}
+.g-indigo{background:linear-gradient(135deg,#262a52,#4b4f8a);}
+.g-green{background:linear-gradient(135deg,#1f7a5a,#2fae7e);}
+.g-violet{background:linear-gradient(135deg,#7a5cc7,#5a3fa0);}
+.g-amber{background:linear-gradient(135deg,#e0913a,#c96a1e);}
+.g-slate{background:linear-gradient(135deg,#3a4a5a,#5c7186);}
+.g-rose{background:linear-gradient(135deg,#c0476a,#933455);}
+.g-teal{background:linear-gradient(135deg,#1f6e7a,#2f9aae);}
+
+/* ---- about ---- */
+.about-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:52px;align-items:start;margin-top:40px;}
+@media(max-width:760px){.about-grid{grid-template-columns:1fr;gap:30px;}}
+.about-grid p{font-size:1.1rem;margin-bottom:20px;}
+.side-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:26px;margin-bottom:22px;}
+.side-card h4{font-size:1.05rem;margin-bottom:14px;}
+.side-card .row{padding:11px 0;border-bottom:1px solid var(--line);font-size:.93rem;}
+.side-card .row:last-child{border-bottom:none;padding-bottom:0;}
+.side-card .row b{display:block;font-weight:600;}
+.side-card .row span{color:var(--faint);font-size:.85rem;}
+.taglist{display:flex;flex-wrap:wrap;gap:8px;}
+
+/* ---- contact / cta band ---- */
+.band{background:var(--indigo);color:#fff;border-radius:20px;padding:54px 48px;margin:60px auto;max-width:var(--maxw);}
+.band h2{color:#fff;max-width:18ch;}
+.band p{color:#c9cbe4;font-size:1.12rem;margin-top:16px;max-width:54ch;}
+.band .links{display:flex;gap:26px;flex-wrap:wrap;margin-top:28px;font-size:1.05rem;}
+.band .links a{color:#fff;font-weight:500;border-bottom:1px solid var(--accent);padding-bottom:2px;}
+.band .links a:hover{border-color:#fff;}
+@media(max-width:600px){.band{padding:38px 26px;border-radius:14px;}}
+
+/* ---- gallery ---- */
+.masonry{columns:3;column-gap:20px;margin-top:40px;}
+@media(max-width:900px){.masonry{columns:2;}}
+@media(max-width:560px){.masonry{columns:1;}}
+.tile{break-inside:avoid;margin-bottom:20px;border-radius:12px;overflow:hidden;border:1px solid var(--line);}
+.tile .ph{display:flex;align-items:flex-end;color:#fff;padding:16px;font-weight:500;font-size:.95rem;}
+.tile .ph.tall{min-height:300px;}
+.tile .ph.mid{min-height:220px;}
+.tile .ph.short{min-height:160px;}
+.tile .cap{padding:13px 16px;background:var(--card);font-size:.9rem;}
+.tile .cap b{display:block;font-family:"Fraunces",serif;font-size:1.05rem;font-weight:500;}
+.tile .cap span{color:var(--faint);font-size:.82rem;}
+
+/* ---- footer ---- */
+footer.site{padding:40px 0;text-align:center;color:var(--faint);font-size:.88rem;}
+footer.site a{color:var(--soft);}
+footer.site .fl{display:flex;gap:20px;justify-content:center;margin-bottom:12px;}
+
+/* placeholder note banner (remove after adding images) */
+.imgnote{background:#fff4d6;border:1px dashed #d8b54a;color:#7a5a06;border-radius:10px;padding:12px 18px;font-size:.9rem;margin-top:30px;}
+.imgnote code{background:#fbeec0;padding:1px 6px;border-radius:4px;}
