@@ -12,7 +12,7 @@
 </head>
 <body>
 
-<nav class="site">
+<nav class="site over-hero">
   <div class="wrap">
     <a class="brand" href="index.html">Samuel<span>.</span>Falade</a>
     <button class="menu-toggle" aria-label="Menu" onclick="document.getElementById('nav').classList.toggle('open')">&#9776;</button>
@@ -27,10 +27,13 @@
   </div>
 </nav>
 
-<header class="hero">
+<header class="hero-cine">
+  <div class="glow"></div>
+  <div class="grain"></div>
   <div class="wrap">
-    <div class="eyebrow">Learning Experience &middot; Instructional Design &middot; EdTech</div>
-    <h1>I help people learn the <em>hard</em> things, faster.</h1>
+    <span class="avail"><span class="dot"></span> Available for learning &amp; design roles</span>
+    <div class="eyebrow" style="margin-top:22px;">Learning Experience &middot; Instructional Design &middot; EdTech</div>
+    <h1>I help people <span class="it">learn</span><br>the <span class="out">hard</span> things, faster.</h1>
     <p class="lede">
       I&rsquo;m Samuel &mdash; an engineer turned learning &amp; experience designer. I build training,
       tools, and interactive experiences that people actually finish and remember, drawing on a mix
@@ -38,10 +41,28 @@
     </p>
     <div class="cta-row">
       <a class="btn-lg primary" href="work.html">See selected work</a>
-      <a class="btn-lg ghost" href="about.html">About me</a>
+      <a class="btn-lg ghost" href="resume.html">View r&eacute;sum&eacute;</a>
     </div>
   </div>
 </header>
+
+<section class="stats-band">
+  <div class="wrap">
+    <div class="stats-grid">
+      <div class="stat reveal"><div class="stat-num" data-target="400" data-suffix="+">0</div><div class="stat-label">Engineering students taught at Texas A&amp;M</div></div>
+      <div class="stat reveal"><div class="stat-num" data-target="60" data-suffix="+">0</div><div class="stat-label">VR user studies run, with 50+ participants</div></div>
+      <div class="stat reveal"><div class="stat-num" data-target="10" data-suffix="+">0</div><div class="stat-label">Canvas LMS course experiences built</div></div>
+      <div class="stat reveal"><div class="stat-num" data-target="1000" data-suffix="+">0</div><div class="stat-label">People photographed across 10+ events</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="marquee" aria-hidden="true">
+  <div class="track">
+    <span class="item">Instructional Design</span><span class="item">Learning Experience</span><span class="item">EdTech</span><span class="item">UX Design</span><span class="item">VR / XR</span><span class="item">Curriculum</span>
+    <span class="item">Instructional Design</span><span class="item">Learning Experience</span><span class="item">EdTech</span><span class="item">UX Design</span><span class="item">VR / XR</span><span class="item">Curriculum</span>
+  </div>
+</div>
 
 <section>
   <div class="wrap">
@@ -52,19 +73,19 @@
       hold their attention, and being willing to understand a hard topic deeply before trying to teach it.
     </p>
     <div class="pillars">
-      <div class="pillar">
+      <div class="pillar reveal">
         <div class="n">01</div>
         <h3>Teaching instinct</h3>
         <p>As a teaching assistant at Texas A&amp;M, I worked with 400+ engineering students. I learned
         where explanations break and how to sequence material so a beginner climbs from lost to capable.</p>
       </div>
-      <div class="pillar">
+      <div class="pillar reveal">
         <div class="n">02</div>
         <h3>Designer&rsquo;s craft</h3>
         <p>From building apps, games, and VR, I treat a lesson like a level: clear goals, a fair
         difficulty curve, fast feedback, and no wasted friction. I work in Captivate, Figma, and Adobe CC.</p>
       </div>
-      <div class="pillar">
+      <div class="pillar reveal">
         <div class="n">03</div>
         <h3>Researcher&rsquo;s patience</h3>
         <p>With a background spanning engineering and visualization research, I&rsquo;ll sit with a
@@ -81,7 +102,7 @@
     <p class="sec-intro">From a full educational game to instructional tools and immersive training. <a href="work.html" style="color:var(--accent-deep);font-weight:500;">See all work &rarr;</a></p>
     <div class="grid">
 
-      <a class="proj-card" href="work.html">
+      <a class="proj-card reveal" href="work.html">
         <div class="ph g-coral">MathFlux<small>Replace with assets/mathflux.png</small></div>
         <div class="body">
           <div class="kicker">Educational game</div>
@@ -92,7 +113,7 @@
         </div>
       </a>
 
-      <a class="proj-card" href="work.html">
+      <a class="proj-card reveal" href="work.html">
         <div class="ph g-teal">VR Cat Spay<small>Replace with assets/vr-catspay.png</small></div>
         <div class="body">
           <div class="kicker">Immersive learning &middot; VR</div>
@@ -103,7 +124,7 @@
         </div>
       </a>
 
-      <a class="proj-card" href="work.html">
+      <a class="proj-card reveal" href="work.html">
         <div class="ph g-violet">Teacher App<small>Replace with assets/teacher-app.png</small></div>
         <div class="body">
           <div class="kicker">UX for educators &middot; 2025</div>
@@ -114,7 +135,7 @@
         </div>
       </a>
 
-      <a class="proj-card" href="work.html">
+      <a class="proj-card reveal" href="work.html">
         <div class="ph g-indigo">Curriculum<small>Replace with assets/teaching.png</small></div>
         <div class="body">
           <div class="kicker">Curriculum &amp; instruction</div>
@@ -139,15 +160,42 @@
   </div>
 </div>
 
-<footer class="site">
+<footer class="site-footer reveal">
   <div class="wrap">
-    <div class="fl">
-      <a href="work.html">Work</a><a href="creative.html">Creative</a><a href="about.html">About</a>
-      <a href="https://www.linkedin.com/in/samuelfalade/" target="_blank" rel="noopener">LinkedIn</a>
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <div class="brand">Samuel<span>.</span>Falade</div>
+        <p>Learning experience &amp; instructional design &mdash; helping people learn the hard things, faster.</p>
+        <span class="foot-avail"><span class="dot"></span> Available for learning &amp; design roles</span>
+      </div>
+      <div class="foot-col">
+        <h5>Explore</h5>
+        <a href="index.html">Home</a>
+        <a href="work.html">Work</a>
+        <a href="creative.html">Creative</a>
+        <a href="resume.html">R&eacute;sum&eacute;</a>
+        <a href="about.html">About</a>
+      </div>
+      <div class="foot-col">
+        <h5>Connect</h5>
+        <a href="mailto:samuelfalade@gmail.com">samuelfalade@gmail.com</a>
+        <a href="mailto:samuelfalade@tamu.edu">samuelfalade@tamu.edu</a>
+        <a href="https://www.linkedin.com/in/samuelfalade/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://github.com/samuelfalade" target="_blank" rel="noopener">GitHub</a>
+      </div>
+      <div class="foot-col">
+        <h5>Now</h5>
+        <p>PhD candidate, Engineering Education &mdash; Texas A&amp;M University.</p>
+        <p>Open to instructional design &amp; EdTech roles.</p>
+      </div>
     </div>
-    &copy; 2026 Samuel Falade
+    <div class="foot-base">
+      <span>&copy; 2026 Samuel Falade</span>
+      <span>Built &amp; designed by hand.</span>
+    </div>
   </div>
 </footer>
 
+<script src="site.js"></script>
 </body>
 </html>
