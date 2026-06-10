@@ -57,6 +57,32 @@
     }
   }
 
+  /* scroll-triggered timelapse video: auto-play (muted) when in view, with a sound toggle */
+  var scrollVids = Array.prototype.slice.call(document.querySelectorAll("[data-autoplay-scroll]"));
+  scrollVids.forEach(function (v) {
+    var btn = v.parentNode.querySelector(".tl-sound");
+    if (reduce || !("IntersectionObserver" in window)) {
+      v.setAttribute("controls", "");
+    } else {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting && e.intersectionRatio >= 0.5) {
+            var p = v.play(); if (p && p.catch) p.catch(function () {});
+          } else { v.pause(); }
+        });
+      }, { threshold: [0, 0.5, 0.9] });
+      io.observe(v);
+    }
+    if (btn) {
+      btn.addEventListener("click", function () {
+        v.muted = !v.muted;
+        btn.textContent = v.muted ? "🔇" : "🔊";
+        btn.setAttribute("aria-label", v.muted ? "Unmute" : "Mute");
+        if (!v.muted) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+      });
+    }
+  });
+
   /* in-page media overlay (keeps visitors on-site): iframes, video, and image galleries */
   var triggers = Array.prototype.slice.call(document.querySelectorAll("[data-embed],[data-video],[data-img]"));
   if (triggers.length) {
