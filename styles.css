@@ -266,6 +266,9 @@ button.card-link::after{content:" \2922";font-weight:700;}
 .gthumb:hover::after{opacity:1;}
 .gallery-grid.paintings{columns:2;}
 @media(max-width:560px){.gallery-grid.paintings{columns:1;}}
+.gallery-grid.duo{columns:auto;display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start;}
+.gallery-grid.duo .gthumb{margin:0;}
+@media(max-width:560px){.gallery-grid.duo{grid-template-columns:1fr;}}
 
 /* ---- scroll-triggered timelapse stage ---- */
 .timelapse-stage{position:relative;width:100%;min-height:88vh;margin:30px 0;background:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden;}
