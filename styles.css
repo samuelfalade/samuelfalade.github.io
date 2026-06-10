@@ -108,6 +108,7 @@ section h2{font-size:clamp(1.9rem,3.8vw,2.7rem);max-width:20ch;}
 .side-card .row b{display:block;font-weight:600;}
 .side-card .row span{color:var(--faint);font-size:.85rem;}
 .taglist{display:flex;flex-wrap:wrap;gap:8px;}
+.portrait{width:100%;border-radius:var(--radius);margin-bottom:22px;display:block;box-shadow:var(--shadow);}
 
 /* ---- contact / cta band ---- */
 .band{background:var(--indigo);color:#fff;border-radius:20px;padding:54px 48px;margin:60px auto;max-width:var(--maxw);}
@@ -243,7 +244,26 @@ button.card-link::after{content:" \2922";font-weight:700;}
 .modal-body{flex:1;position:relative;background:#1d1d27;}
 .modal-body iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
 .modal-body video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000;}
+.modal-body img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000;}
 .modal.video .modal-panel{width:min(430px,94vw);height:min(900px,92vh);}
+.modal.image .modal-panel{width:min(1200px,96vw);height:min(880px,94vh);}
+.modal-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:3;display:none;width:46px;height:46px;border:0;border-radius:50%;background:rgba(255,255,255,.14);color:#fff;font-size:1.9rem;line-height:1;cursor:pointer;align-items:center;justify-content:center;transition:background .15s,color .15s;}
+.modal-arrow:hover{background:var(--accent);color:#16161c;}
+.modal-arrow.prev{left:14px;}
+.modal-arrow.next{right:14px;}
+.modal.gallery .modal-arrow{display:flex;}
+
+/* ---- creative gallery grid (masonry) ---- */
+.gallery-grid{columns:3;column-gap:14px;margin-top:36px;}
+@media(max-width:900px){.gallery-grid{columns:2;}}
+@media(max-width:560px){.gallery-grid{columns:1;}}
+.gthumb{break-inside:avoid;display:block;width:100%;margin:0 0 14px;padding:0;border:0;background:none;cursor:pointer;border-radius:10px;overflow:hidden;position:relative;}
+.gthumb img{width:100%;display:block;transition:transform .45s cubic-bezier(.2,.7,.2,1);}
+.gthumb:hover img{transform:scale(1.05);}
+.gthumb::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 55%,rgba(12,12,18,.34));opacity:0;transition:opacity .2s;}
+.gthumb:hover::after{opacity:1;}
+.gallery-grid.paintings{columns:2;}
+@media(max-width:560px){.gallery-grid.paintings{columns:1;}}
 @keyframes mFade{from{opacity:0}to{opacity:1}}
 @keyframes mPop{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){.modal-backdrop,.modal-panel{animation:none;}}

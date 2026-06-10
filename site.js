@@ -57,8 +57,8 @@
     }
   }
 
-  /* in-page embed overlay (keeps visitors on-site) */
-  var triggers = Array.prototype.slice.call(document.querySelectorAll("[data-embed],[data-video]"));
+  /* in-page media overlay (keeps visitors on-site): iframes, video, and image galleries */
+  var triggers = Array.prototype.slice.call(document.querySelectorAll("[data-embed],[data-video],[data-img]"));
   if (triggers.length) {
     var modal = document.createElement("div");
     modal.className = "modal";
@@ -69,39 +69,65 @@
           '<a class="newtab" target="_blank" rel="noopener">Open in new tab ↗</a>' +
           '<button class="modal-close" type="button" aria-label="Close" data-close>×</button>' +
         '</div></div>' +
+        '<button class="modal-arrow prev" type="button" data-nav="-1" aria-label="Previous">‹</button>' +
+        '<button class="modal-arrow next" type="button" data-nav="1" aria-label="Next">›</button>' +
         '<div class="modal-body"></div>' +
       '</div>';
     document.body.appendChild(modal);
     var mBody = modal.querySelector(".modal-body");
     var mTitle = modal.querySelector(".mt");
     var mNewtab = modal.querySelector(".newtab");
-    var lastFocus = null;
+    var lastFocus = null, gallery = [], gIndex = 0;
 
+    function renderImage(t) {
+      mBody.innerHTML = "";
+      var im = document.createElement("img");
+      im.src = t.getAttribute("data-img");
+      im.alt = t.getAttribute("data-title") || "";
+      mBody.appendChild(im);
+      mTitle.textContent = t.getAttribute("data-title") || "";
+    }
     function openModal(t) {
       lastFocus = document.activeElement;
+      var imgSrc = t.getAttribute("data-img");
       var videoSrc = t.getAttribute("data-video");
-      var embedSrc = t.getAttribute("data-embed");
       var link = t.getAttribute("data-link");
-      mTitle.textContent = t.getAttribute("data-title") || "";
       mBody.innerHTML = "";
-      modal.classList.toggle("video", !!videoSrc);
-      if (videoSrc) {
+      modal.classList.remove("video", "image", "gallery");
+      mNewtab.style.display = "none";
+      if (imgSrc) {
+        modal.classList.add("image");
+        var gname = t.getAttribute("data-gallery");
+        if (gname) {
+          gallery = triggers.filter(function (x) { return x.getAttribute("data-gallery") === gname; });
+          gIndex = gallery.indexOf(t);
+          if (gallery.length > 1) modal.classList.add("gallery");
+        } else { gallery = [t]; gIndex = 0; }
+        renderImage(t);
+      } else if (videoSrc) {
+        modal.classList.add("video");
         var v = document.createElement("video");
-        v.src = videoSrc;
-        v.controls = true; v.autoplay = true; v.setAttribute("playsinline", "");
+        v.src = videoSrc; v.controls = true; v.autoplay = true; v.setAttribute("playsinline", "");
         mBody.appendChild(v);
+        mTitle.textContent = t.getAttribute("data-title") || "";
+        if (link) { mNewtab.href = link; mNewtab.style.display = ""; }
       } else {
         var f = document.createElement("iframe");
         f.setAttribute("allow", "autoplay; fullscreen; clipboard-write; encrypted-media; picture-in-picture");
         f.setAttribute("allowfullscreen", "");
-        f.src = embedSrc;
+        f.src = t.getAttribute("data-embed");
         mBody.appendChild(f);
+        mTitle.textContent = t.getAttribute("data-title") || "";
+        if (link) { mNewtab.href = link; mNewtab.style.display = ""; }
       }
-      if (link) { mNewtab.href = link; mNewtab.style.display = ""; }
-      else { mNewtab.style.display = "none"; }
       modal.classList.add("open");
       document.body.style.overflow = "hidden";
       modal.querySelector(".modal-close").focus();
+    }
+    function navGallery(dir) {
+      if (!modal.classList.contains("gallery") || gallery.length < 2) return;
+      gIndex = (gIndex + dir + gallery.length) % gallery.length;
+      renderImage(gallery[gIndex]);
     }
     function closeModal() {
       modal.classList.remove("open");
@@ -110,16 +136,17 @@
       if (lastFocus && lastFocus.focus) lastFocus.focus();
     }
     triggers.forEach(function (t) {
-      t.addEventListener("click", function (e) {
-        e.preventDefault();
-        openModal(t);
-      });
+      t.addEventListener("click", function (e) { e.preventDefault(); openModal(t); });
     });
     modal.addEventListener("click", function (e) {
       if (e.target.hasAttribute && e.target.hasAttribute("data-close")) closeModal();
+      else if (e.target.hasAttribute && e.target.hasAttribute("data-nav")) navGallery(parseInt(e.target.getAttribute("data-nav"), 10));
     });
     document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape" && modal.classList.contains("open")) closeModal();
+      if (!modal.classList.contains("open")) return;
+      if (e.key === "Escape") closeModal();
+      else if (e.key === "ArrowLeft") navGallery(-1);
+      else if (e.key === "ArrowRight") navGallery(1);
     });
   }
 })();
