@@ -93,7 +93,7 @@
       var videoSrc = t.getAttribute("data-video");
       var link = t.getAttribute("data-link");
       mBody.innerHTML = "";
-      modal.classList.remove("video", "image", "gallery");
+      modal.classList.remove("video", "vportrait", "image", "gallery");
       mNewtab.style.display = "none";
       if (imgSrc) {
         modal.classList.add("image");
@@ -106,6 +106,7 @@
         renderImage(t);
       } else if (videoSrc) {
         modal.classList.add("video");
+        if (t.getAttribute("data-orient") === "portrait") modal.classList.add("vportrait");
         var v = document.createElement("video");
         v.src = videoSrc; v.controls = true; v.autoplay = true; v.setAttribute("playsinline", "");
         mBody.appendChild(v);
