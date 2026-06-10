@@ -224,6 +224,7 @@ nav.site.over-hero.scrolled .menu-toggle{color:var(--ink);}
 .proj-card .ph.has-embed{padding:0;background:#000;}
 .proj-card .ph.has-embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
 .proj-card:hover .ph.has-embed{transform:none;}
+.credits{font-size:.76rem;line-height:1.5;color:var(--faint);margin-top:12px;}
 .card-link{display:inline-block;margin-top:14px;color:var(--accent-deep);font-weight:600;font-size:.92rem;}
 .card-link:hover{text-decoration:underline;}
 button.card-link{background:none;border:0;padding:0;cursor:pointer;font-family:inherit;text-align:left;}
