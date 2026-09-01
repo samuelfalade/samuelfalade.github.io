@@ -210,9 +210,14 @@ nav.site.over-hero.scrolled .menu-toggle{color:var(--ink);}
 .marquee .item::after{content:"\002A";font-style:normal;margin:0 38px;opacity:.55;font-size:1rem;transform:translateY(-2px);}
 @keyframes scrollX{from{transform:translateX(0);}to{transform:translateX(-50%);}}
 
-/* ---- scroll reveal ---- */
-.reveal{opacity:0;transform:translateY(24px);transition:opacity .65s ease,transform .65s cubic-bezier(.2,.7,.2,1);}
+/* ---- scroll reveal ----
+   The hidden state is armed by site.js (html.rv), so no-JS visitors, crawlers,
+   and print see everything. Anything on screen at load gets .in before arming
+   and never animates. */
+.rv .reveal{transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1);}
+.rv .reveal:not(.in){opacity:0;transform:translateY(24px);}
 .reveal.in{opacity:1;transform:none;}
+@media print{.reveal{opacity:1!important;transform:none!important;}}
 
 /* ---- richer hovers ---- */
 .proj-card{transition:transform .2s,box-shadow .28s,border-color .2s;}
@@ -342,10 +347,24 @@ footer.site-footer .foot-base{margin-top:48px;padding-top:22px;border-top:1px so
 .photo-bleed img{width:100%;max-height:72vh;object-fit:cover;}
 .photo-bleed .bleed-cap{position:absolute;left:24px;bottom:16px;color:rgba(255,255,255,.85);text-shadow:0 1px 8px rgba(0,0,0,.6);pointer-events:none;}
 
+/* ============================================================
+   v5 — scroll choreography: hero recede, image settle, statement
+   ============================================================ */
+.hero-scroll{position:relative;z-index:3;will-change:transform,opacity;}
+.rv .proj-card.featured .ph img{transform:scale(1.05);transition:transform 1.2s cubic-bezier(.22,1,.36,1);}
+.proj-card.featured.reveal.in .ph img{transform:scale(1);}
+.photo-bleed{overflow:hidden;}
+.rv .photo-bleed img{transform:scale(1.05);transition:transform 1.2s cubic-bezier(.22,1,.36,1);}
+.photo-bleed.reveal.in img{transform:scale(1);}
+.statement{border-top:none;padding:34px 0 10px;}
+.statement .big-say{font-family:"Fraunces",serif;font-weight:500;font-size:clamp(2.4rem,5.6vw,4.4rem);line-height:1.1;letter-spacing:-.015em;margin:0;max-width:22ch;}
+.statement .big-say em{color:var(--accent-deep);}
+
 /* ---- reduced motion ---- */
 @media(prefers-reduced-motion:reduce){
   .hero-cine .glow::before,.hero-cine .glow::after,.hero-cine .grain,.marquee .track,.avail .dot,footer.site-footer .foot-avail .dot{animation:none!important;}
   .reveal{opacity:1!important;transform:none!important;transition:none!important;}
+  .rv .proj-card.featured .ph img,.rv .photo-bleed img{transform:none!important;transition:none!important;}
   html{scroll-behavior:auto;}
 }
 

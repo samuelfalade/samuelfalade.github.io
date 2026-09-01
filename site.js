@@ -9,25 +9,35 @@
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
 
-  /* scroll reveal with staggering, respecting reduced motion */
+  /* scroll reveal with staggering, respecting reduced motion.
+     The hidden state only exists under html.rv, added here after anything
+     already on screen is marked .in, so there is no flash and nothing above
+     the fold animates on load. */
   var items = Array.prototype.slice.call(document.querySelectorAll(".reveal"));
   if (reduce || !("IntersectionObserver" in window)) {
     items.forEach(function (el) { el.classList.add("in"); });
   } else {
+    var vh = window.innerHeight;
+    var pending = [];
+    items.forEach(function (el) {
+      if (el.getBoundingClientRect().top < vh * 0.92) el.classList.add("in");
+      else pending.push(el);
+    });
+    document.documentElement.classList.add("rv");
     var io = new IntersectionObserver(function (entries) {
+      /* stagger within the batch that arrived together, capped so late rows
+         of a long grid never feel laggy */
+      var n = 0;
       entries.forEach(function (e) {
         if (!e.isIntersecting) return;
         var el = e.target;
-        var sibs = el.parentNode
-          ? Array.prototype.slice.call(el.parentNode.children).filter(function (c) { return c.classList && c.classList.contains("reveal"); })
-          : [el];
-        var idx = sibs.indexOf(el);
-        el.style.transitionDelay = (idx > 0 ? idx * 80 : 0) + "ms";
+        el.style.transitionDelay = Math.min(n * 75, 375) + "ms";
+        n++;
         el.classList.add("in");
         io.unobserve(el);
       });
     }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
-    items.forEach(function (el) { io.observe(el); });
+    pending.forEach(function (el) { io.observe(el); });
   }
 
   /* stat count-up */

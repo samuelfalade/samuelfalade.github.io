@@ -107,6 +107,25 @@
     });
     requestAnimationFrame(frame);
 
+    /* scroll recede: hero content sinks, shrinks, and dims as the page moves
+       on. Applied to .hero-scroll (the .wrap parent) so it composes with the
+       pointer parallax that owns .wrap's transform. */
+    var hs = hero.querySelector(".hero-scroll");
+    if (hs) {
+      var scrollTick = false;
+      var recede = function () {
+        scrollTick = false;
+        var hh = hero.offsetHeight || 1;
+        var p = Math.min(1, Math.max(0, window.scrollY / (hh * 0.9)));
+        hs.style.transform = "translateY(" + (p * 46).toFixed(1) + "px) scale(" + (1 - p * 0.04).toFixed(4) + ")";
+        hs.style.opacity = (1 - p * 0.6).toFixed(3);
+      };
+      window.addEventListener("scroll", function () {
+        if (!scrollTick) { scrollTick = true; requestAnimationFrame(recede); }
+      }, { passive: true });
+      recede();
+    }
+
     /* pointer parallax on the hero glows + headline depth */
     if (fine) {
       var glow = hero.querySelector(".glow");
