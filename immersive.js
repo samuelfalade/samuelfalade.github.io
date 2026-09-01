@@ -151,7 +151,7 @@
       var chip = document.createElement("button");
       chip.type = "button";
       chip.className = "motion-chip";
-      chip.textContent = "✦ Enable motion";
+      chip.textContent = "Enable motion";
       document.body.appendChild(chip);
       chip.addEventListener("click", function () {
         chip.remove();

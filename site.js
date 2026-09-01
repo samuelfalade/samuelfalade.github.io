@@ -76,7 +76,7 @@
     if (btn) {
       btn.addEventListener("click", function () {
         v.muted = !v.muted;
-        btn.textContent = v.muted ? "🔇" : "🔊";
+        btn.textContent = v.muted ? "sound: off" : "sound: on";
         btn.setAttribute("aria-label", v.muted ? "Unmute" : "Mute");
         if (!v.muted) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
       });
